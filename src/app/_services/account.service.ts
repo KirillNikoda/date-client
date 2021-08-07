@@ -9,7 +9,7 @@ import {User} from "../_models/user.interface";
 })
 export class AccountService {
   baseUrl = 'https://localhost:5001/api/account/';
-  private currentUserSource = new ReplaySubject(1);
+  private currentUserSource = new ReplaySubject<User | null>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient) {}
@@ -33,3 +33,4 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
 }
+
