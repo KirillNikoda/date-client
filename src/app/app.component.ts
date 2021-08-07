@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { AfterContentInit, Component } from '@angular/core';
+import {User} from "./_models/user.interface";
+import {AccountService} from "./_services/account.service";
 
 interface IUser {
   id: number;
@@ -12,7 +14,7 @@ interface IUser {
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements AfterContentInit {
-  constructor(private readonly http: HttpClient) {}
+  constructor(private http: HttpClient, private accountService: AccountService) {}
 
   public title: string = 'my app';
   public users: IUser[] = [];
@@ -22,5 +24,11 @@ export class AppComponent implements AfterContentInit {
       (data: any) => (this.users = data),
       (error) => console.log(error)
     );
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const user: User = JSON.parse(localStorage.getItem('user') as string);
+    this.accountService.setCurrentUser(user);
   }
 }

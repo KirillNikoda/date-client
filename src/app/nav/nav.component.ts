@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ILogin } from '../interfaces/ILogin';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -8,7 +7,7 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  model: ILogin = {
+  model: any = {
     username: '',
     password: ''
   };
@@ -16,7 +15,9 @@ export class NavComponent implements OnInit {
 
   constructor(private accountService: AccountService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCurrentUser();
+  }
 
   login() {
     this.accountService.login(this.model).subscribe(
@@ -25,6 +26,22 @@ export class NavComponent implements OnInit {
         this.loggedIn = true;
       },
       (error) => console.log(error)
+    );
+  }
+
+  logout() {
+    this.accountService.logout();
+    this.loggedIn = false;
+  }
+
+  getCurrentUser() {
+    this.accountService.currentUser$.subscribe(
+      (user) => {
+        this.loggedIn = !!user;
+      },
+      (error) => {
+        console.log(error);
+      }
     );
   }
 }
