@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AccountService } from '../_services/account.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -12,18 +14,28 @@ export class NavComponent {
     password: ''
   };
 
-  constructor(public accountService: AccountService) {}
+  constructor(
+    public accountService: AccountService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   login() {
     this.accountService.login(this.model).subscribe(
-      (response) => {
-        console.log(response);
+      (_) => {
+        this.router.navigateByUrl('/members');
+        this.model.username = '';
+        this.model.password = '';
       },
-      (error) => console.log(error)
+      ({error}) => {
+        console.log(error)
+        this.toastr.error(error);
+      }
     );
   }
 
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
   }
 }
