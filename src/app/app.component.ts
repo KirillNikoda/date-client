@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { AfterContentInit, Component } from '@angular/core';
-import {User} from "./_models/user.interface";
-import {AccountService} from "./_services/account.service";
+import { Component, OnInit } from '@angular/core';
+import { User } from './_models/user.interface';
+import { AccountService } from './_services/account.service';
 
 interface IUser {
   id: number;
@@ -13,18 +12,14 @@ interface IUser {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements AfterContentInit {
-  constructor(private http: HttpClient, private accountService: AccountService) {}
+export class AppComponent implements OnInit {
+  constructor(private accountService: AccountService) {}
 
   public title: string = 'my app';
   public users: IUser[] = [];
 
-  public ngAfterContentInit() {
-    this.http.get('https://localhost:5001/api/users').subscribe(
-      (data: any) => (this.users = data),
-      (error) => console.log(error)
-    );
-    this.setCurrentUser();
+  ngOnInit() {
+    this.setCurrentUser()
   }
 
   setCurrentUser() {

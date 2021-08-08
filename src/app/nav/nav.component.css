@@ -6,3 +6,11 @@
 .dropdown-toggle, .dropdown-item {
   cursor: pointer;
 }
+
+.active-link {
+  color: red;
+}
+
+.link {
+  color: gainsboro;
+}

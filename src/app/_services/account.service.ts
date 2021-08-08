@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import {ReplaySubject} from "rxjs";
-import {User} from "../_models/user.interface";
+import { ReplaySubject } from 'rxjs';
+import { User } from '../_models/user.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,27 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model).pipe(map((response) => {
-      const user = response as User;
-      if (user) {
-        localStorage.setItem('user', JSON.stringify(user));
-        this.currentUserSource.next(user);
-      }
-    }));
+    return this.http.post(this.baseUrl + 'login', model).pipe(
+      map((response) => {
+        const user = response as User;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    );
+  }
+
+  register(model: any) {
+    return this.http.post(this.baseUrl + 'register', model).pipe(
+      map((user: any) => {
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+          console.log(this.currentUserSource.asObservable().subscribe((res) => console.log(res)))
+        }
+      })
+    );
   }
 
   setCurrentUser(user: User) {
@@ -33,4 +47,3 @@ export class AccountService {
     this.currentUserSource.next(null);
   }
 }
-
