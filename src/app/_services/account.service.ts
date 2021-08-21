@@ -16,7 +16,7 @@ export class AccountService {
   constructor(private http: HttpClient) {}
 
   login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model).pipe(
+    return this.http.post(`${this.baseUrl}account/login`, model).pipe(
       map((response) => {
         const user = response as User;
         if (user) {
@@ -28,7 +28,7 @@ export class AccountService {
   }
 
   register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model).pipe(
+    return this.http.post(`${this.baseUrl}account/register`, model).pipe(
       map((user: any) => {
         if (user) {
           localStorage.setItem('user', JSON.stringify(user));

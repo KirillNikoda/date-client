@@ -27,11 +27,15 @@ export class NavComponent {
         this.model.username = '';
         this.model.password = '';
       },
-      ({error}) => {
-        console.log(error)
+      ({ error }) => {
+        console.log(error);
         this.toastr.error(error);
       }
     );
+  }
+
+  edit() {
+    this.router.navigateByUrl('/member/edit');
   }
 
   logout() {
