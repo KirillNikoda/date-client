@@ -3,7 +3,8 @@
   justify-content: space-between;
 }
 
-.dropdown-toggle, .dropdown-item {
+.dropdown-toggle,
+.dropdown-item {
   cursor: pointer;
 }
 
@@ -13,4 +14,10 @@
 
 .link {
   color: gainsboro;
+}
+
+img {
+  max-height: 50px;
+  border: 2px solid #fff;
+  display: inline;
 }
